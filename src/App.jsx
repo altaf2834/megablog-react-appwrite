@@ -1,28 +1,32 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import './App.css'
 import { useDispatch } from 'react-redux'
 import authService from './appwrite/auth'
 import {login, logout } from './store/authSlice'
 import { Footer, Header } from './components'
 import { Outlet } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 function App() {
-  const[loading,setLoading]=useState(true)
   const dispatch=useDispatch()
+  const authLoading=useSelector((state)=>state.auth.loading)
 
-  useEffect(()=>{
+ useEffect(() => {
     authService.getCurrentUser()
-    .then((userData)=>{
-      if(userData){
-        dispatch(login({userData}))
-      }
-      else{
-        dispatch(logout())
-      }
-    }).finally(()=>setLoading(false))
-  },[])
+        .then((userData) => {
+            console.log("getCurrentUser returned:", userData);
 
-  if (loading) {
+            if (userData) {
+                console.log("Dispatching login:", { userData });
+                dispatch(login({ userData }));
+            } else {
+                console.log("Dispatching logout");
+                dispatch(logout());
+            }
+        });
+}, [dispatch]);
+
+  if (authLoading) {
     return (
       <div className='min-h-screen flex items-center justify-center' style={{backgroundColor: 'var(--bg-base)'}}>
         <div className='flex flex-col items-center gap-4'>

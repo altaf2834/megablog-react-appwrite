@@ -7,7 +7,9 @@ import { useSelector } from 'react-redux';
 function Home() {
     const [posts, setPosts] = useState([])
     const [loading,setLoading]=useState(true)
-    const userData=useSelector((state)=>state.auth.userData)
+    const { status, loading: authLoading } = useSelector(
+        (state) => state.auth
+    );
 
     useEffect(() => {
         appwriteService.getPosts().then((posts) => {
@@ -19,7 +21,7 @@ function Home() {
         })
     }, [])
   
-    if (loading) {
+    if (loading || authLoading) {
         return (
             <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
                 <div className="h-12 w-12 animate-spin rounded-full border-4 border-indigo-500 border-t-transparent"></div>
@@ -27,7 +29,7 @@ function Home() {
         );
     }
     
-    if (posts.length === 0 && !userData) {
+    if (posts.length === 0 && !status) {
         return (
             <div className="min-h-[calc(100vh-4rem)] flex flex-col">
                 {/* Hero Section */}
@@ -131,7 +133,7 @@ function Home() {
         )
     }
 
-    if(posts.length===0 && userData){
+    if(posts.length===0 && status){
         return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4">
         <div className="max-w-xl w-full text-center">
