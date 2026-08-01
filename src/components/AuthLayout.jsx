@@ -19,6 +19,15 @@ export default function Protected({
     setLoader(false)
   },[authStatus,navigate,authentication])
 
-  return loader? <h1>Loading...</h1> :<>{children}</>
+  return loader? (
+    <div className='min-h-[calc(100vh-4rem)] flex items-center justify-center'>
+      <div className='flex flex-col items-center gap-3'>
+        <div className='spinner'></div>
+        <p style={{color: 'var(--text-muted)', fontSize: '0.8125rem', fontFamily: "'Inter', sans-serif"}}>
+          Checking authentication...
+        </p>
+      </div>
+    </div>
+  ) : <>{children}</>
 }
 

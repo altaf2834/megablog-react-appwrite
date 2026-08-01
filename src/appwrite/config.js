@@ -18,14 +18,6 @@ export class Services{
         status,userId
     }){
         try{
-            console.log({
-        title,
-        slug,
-        content,
-        featuredImage,
-        status,
-        userId,
-        });
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
@@ -109,7 +101,6 @@ export class Services{
     async uploadFile(file){
         try{
             
-            console.log("Bucket ID:", conf.appwriteBucketId);
             return await this.bucket.createFile(
                 conf.appwriteBucketId,
                 ID.unique(),
