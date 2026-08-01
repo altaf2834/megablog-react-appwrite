@@ -22,17 +22,27 @@ function App() {
     }).finally(()=>setLoading(false))
   },[])
 
-  return !loading?(
-  <div className='min-h-screen flex flex-wrap
-  content-between bg-gray-400'>
-    <div className='w-full block' >
+  if (loading) {
+    return (
+      <div className='min-h-screen flex items-center justify-center' style={{backgroundColor: 'var(--bg-base)'}}>
+        <div className='flex flex-col items-center gap-4'>
+          <div className='spinner'></div>
+          <p style={{color: 'var(--text-muted)', fontSize: '0.875rem', fontFamily: "'Inter', sans-serif"}}>
+            Loading MegaBlog...
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className='min-h-screen flex flex-col' style={{backgroundColor: 'var(--bg-base)'}}>
       <Header/>
-      <main>
+      <main className='flex-1'>
         <Outlet/>
       </main>
       <Footer/>
     </div>
-
-  </div>) :null
+  )
 }
 export default App
