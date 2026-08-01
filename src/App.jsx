@@ -18,7 +18,6 @@ function App() {
             if (userData) {
                 dispatch(login({ userData }));
             } else {
-                console.log("Dispatching logout");
                 dispatch(logout());
             }
         });
