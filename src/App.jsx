@@ -14,10 +14,8 @@ function App() {
  useEffect(() => {
     authService.getCurrentUser()
         .then((userData) => {
-            console.log("getCurrentUser returned:", userData);
 
             if (userData) {
-                console.log("Dispatching login:", { userData });
                 dispatch(login({ userData }));
             } else {
                 console.log("Dispatching logout");

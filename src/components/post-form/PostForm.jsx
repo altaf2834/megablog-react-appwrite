@@ -18,18 +18,15 @@ export default function PostForm({ post }) {
     const navigate = useNavigate();
 
     const auth = useSelector((state) => state.auth);
-    console.log("AUTH STATE:", auth);
     const userData = auth.userData;
     
     const submit = async (data) => {
-        console.log("Redux userData:", userData);
         if (post) {
             const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
 
             if (file) {
                 appwriteService.deleteFile(post.featuredImage);
             }
-            console.log("userData:", userData);
             const dbPost = await appwriteService.updatePost(post.$id, {
                 ...data,
                 featuredImage: file ? file.$id : undefined,
